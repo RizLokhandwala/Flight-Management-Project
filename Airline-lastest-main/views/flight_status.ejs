@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+
+<style>
+    .main-body {
+        margin-top: 120px;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-1 fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="row">
+                    <img src="./phoenix_nav.png" style="width: 200px;" alt="">
+                    <!-- <h1>The Demo Page</h1> -->
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/signin" class="nav-link fw-bolder">SIGN IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/er" class="nav-link">ER Diagram</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.youtube.com/watch?v=4sosXZsdy-s&t=2642s" class="nav-link">Video Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container px-5 main-body">
+        <h1 class="fw-bolder" style="font-weight: 700;">
+            There are <%= size %> result(s) match your search
+        </h1>
+    </div>
+
+
+    <div class="container p-5">
+        <div class="accordion" id="accordionExample">
+            <% for (let i=0;i<size;i++){ %>
+                <div class="card">
+                    <div class="card-header p-4 d-flex justify-content-between align-items-center" id="headingOne"
+                        style="height:150px">
+                        <div class="d-inline-flex flex-column justify-content-start">
+                            <p class="text-muted">
+                                <%=dep_date[i] %>
+                            </p>
+                            <h3 class="fw-bolder">
+                                #<%=table[i].flight_id %>
+                            </h3>
+                        </div>
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#<%=table[i].flight_id  %> " aria-expanded="false"
+                                aria-controls="<%=table[i].flight_id  %>">
+                                Show details
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="<%=table[i].flight_id  %>" class="collapse">
+                        <div class="card-body d-flex flex-row justify-content-between" style="height:300px">
+                            <div class="col-md-4 px-4 d-inline-flex justify-content-between flex-column align-items-stretch text-center"
+                                style="border-right: solid 1px rgb(228, 225, 225)">
+                                <div class='mt-5'>
+                                    <h2 class=" fw-bolder">
+                                        <%=depart%> -> <%= arrive %>
+                                    </h2>
+                                </div>
+                                <div>
+                                    <form action="update_flight" method="post">
+                                        <input type="hidden" name="flight_id" value="<%=table[i].flight_id%> " />
+                                        <button class="btn btn-link">Update</button>
+                                    </form>
+
+                                    <p class="text-muted">
+                                        <%=aircraft[i]%>
+                                    </p>
+                                    <p class="text-muted">Subject to change</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8 px-4">
+                                <div class="row" style="border-bottom: solid 1px rgb(228, 225, 225) ;">
+                                    <div class="col-md-4 ">
+                                        <div class=" d-inline-flex flex-column px-3">
+                                            <p class="h5 fw-normal">DEPARTED</p>
+                                            <p class="h2">
+                                                <%=dep_time[i] %>
+                                            </p>
+                                            <p class="text-muted">Gate: <%=table[i].departure_gate %>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-center align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                            fill="currentColor" class="bi bi-arrow-right mt-4" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                        </svg>
+                                    </div>
+                                    <div class="col-md-4  text-end">
+                                        <div class=" d-inline-flex flex-column">
+                                            <p class="h5 fw-normal">ARRIVED</p>
+                                            <p class="h2">
+                                                <%=arr_time[i] %>
+                                            </p>
+                                            <p class="text-muted">Gate: <%= table[i].arrival_gate %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5 d-flex flex-row justifi-content-between">
+                                    <div class="col-md-4" style="border-right: 1px solid rgb(228, 225, 225)">
+                                        <div class=" d-inline-flex flex-column px-3">
+                                            <p class="h6 text-muted ">Refueling</p>
+                                            <% if(table[i].refueling){ %>
+                                                <p class="h4">READY</p>
+                                                <% }else{ %>
+                                                    <p class="h4">NOT READY</p>
+                                                    <% } %>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="border-right: 1px solid rgb(228, 225, 225)">
+                                        <div class=" d-inline-flex flex-column px-3">
+                                            <p class="h6 text-muted  ">Maintenance</p>
+                                            <% if(table[i].maintenance){ %>
+                                                <p class="h4">READY</p>
+                                                <% }else{ %>
+                                                    <p class="h4">NOT READY</p>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class=" d-inline-flex flex-column px-3">
+                                            <p class="h6 text-muted  ">Cleaning</p>
+                                            <% if(table[i].cleaning){ %>
+                                                <p class="h4">READY</p>
+                                                <% }else{ %>
+                                                    <p class="h4">NOT READY</p>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <% } %>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

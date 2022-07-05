@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Homepage</title>
+</head>
+<style>
+    /* .carousel-inner {
+        width: 100%;
+        max-height: 600px;
+    } */
+
+    .carousel-item {
+        color: white;
+        height: 30rem;
+        position: relative;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .carousel-flex {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 20px;
+        /* padding: 10px; */
+        /* background-color: black; */
+        /* background-color: rgba(0, 0, 0, 0.1); */
+    }
+
+    .overlay-image {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .travel {
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.1);
+        /* padding-bottom: 5px */
+    }
+
+    .d-inline-flex {
+        /* background-color: white; */
+        background-color: rgba(0, 0, 0, 0.3);
+        /* color: black; */
+        border-radius: 10px;
+        /* border: 0.5px solid black; */
+        margin-bottom: 30px;
+    }
+
+    #depart_input {
+        font-weight: bold;
+    }
+
+    #arrive_input {
+        font-weight: bold;
+
+    }
+
+    #flight_number {
+        font-weight: bold;
+    }
+
+    label {
+        font-size: small;
+    }
+</style>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-1 fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="row">
+                    <img src="./phoenix_nav.png" style="width: 200px;" alt="">
+                    <!-- <h1>The Demo Page</h1> -->
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/signin" class="nav-link fw-bolder">SIGN IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/er" class="nav-link">ER Diagram</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.youtube.com/watch?v=4sosXZsdy-s&t=2642s" class="nav-link">Video Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="carouselExampleDark" class="carousel carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active" data-bs-interval="5000">
+                <div class="overlay-image">
+                    <img src="./slide-5.jpg" class="d-block w-100" alt="">
+                </div>
+                <div class="container carousel-flex">
+                    <div class="d-sm-flex justify-content-end">
+                        <div class="d-inline-flex flex-column p-3 bd-highlight w-50">
+                            <h3 class="pb-3 fw-bolder">FLIGHT STATUS</h3>
+                            <form class="needs-validation" novalidate action="/flight_status" method="get">
+                                <div class=" row">
+                                    <div class="col-md">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="depart_input"
+                                                name="depart_input" placeholder="ex: HOU" required>
+                                            <label class="text-dark" for="depart_input">FROM</label>
+                                            <div class="invalid-feedback" style="font-weight: bolder;">
+                                                Enter departure airport!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="arrive_input"
+                                                name="arrive_input" placeholder="ex: LAS" required>
+                                            <label class="text-dark" for="arrive_input">TO</label>
+                                            <div class="invalid-feedback" style="font-weight: bolder;">
+                                                Enter arrival airport!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="">And/or</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="flight_number"
+                                                name="flight_number" placeholder="ex: AA1137">
+                                            <label class="text-dark" for="flight_number">FLIGHT #</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-warning"
+                                                style="height: 50px; font-weight: bolder;">SEARCH</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="carousel-item" data-bs-interval="5000">
+                <div class="overlay-image">
+                    <img src="./slide-1.jpg" class="d-block w-100" alt="...">
+                </div>
+
+                <div class="container carousel-flex">
+                    <div class="d-sm-flex justify-content-end">
+                        <div class="d-inline-flex flex-column p-3 bd-highlight w-50">
+                            <h3 class="pb-3 fw-bolder">FLIGHT STATUS</h3>
+                            <form class="needs-validation" novalidate action="/flight_status" method="get">
+                                <div class=" row">
+                                    <div class="col-md">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="depart_input"
+                                                name="depart_input" placeholder="ex: HOU" required>
+                                            <label class="text-dark" for="depart_input">FROM</label>
+                                            <div class="invalid-feedback" style="font-weight: bolder;">
+                                                Enter departure airport!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="arrive_input"
+                                                name="arrive_input" placeholder="ex: LAS" required>
+                                            <label class="text-dark" for="arrive_input">TO</label>
+                                            <div class="invalid-feedback" style="font-weight: bolder;">
+                                                Enter arrival airport!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="">And/or</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="flight_number"
+                                                name="flight_number" placeholder="ex: AA1137">
+                                            <label class="text-dark" for="flight_number">FLIGHT #</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-warning"
+                                                style="height: 50px; font-weight: bolder;">SEARCH</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="carousel-item" data-bs-interval="5000">
+                <div class="overlay-image">
+                    <img src="./slide-6.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="container carousel-flex">
+                    <div class="d-sm-flex justify-content-end">
+                        <div class="d-inline-flex flex-column p-3 bd-highlight w-50">
+                            <h3 class="pb-3 fw-bolder">FLIGHT STATUS</h3>
+                            <form class="needs-validation" novalidate action="/flight_status" method="get">
+                                <div class=" row">
+                                    <div class="col-md">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="depart_input"
+                                                name="depart_input" placeholder="ex: HOU" required>
+                                            <label class="text-dark" for="depart_input">FROM</label>
+                                            <div class="invalid-feedback" style="font-weight: bolder;">
+                                                Enter departure airport!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="arrive_input"
+                                                name="arrive_input" placeholder="ex: LAS" required>
+                                            <label class="text-dark" for="arrive_input">TO</label>
+                                            <div class="invalid-feedback" style="font-weight: bolder;">
+                                                Enter arrival airport!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="">And/or</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="flight_number"
+                                                name="flight_number" placeholder="ex: AA1137">
+                                            <label class="text-dark" for="flight_number">FLIGHT #</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-warning"
+                                                style="height: 50px; font-weight: bolder;">SEARCH</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+
+    <section class="p-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="card">
+                        <img src="./youtube.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-weight: bolder;">The Video Demo</h5>
+                            <p class="card-text">In the lastest video, we described how to use the website properly.
+                            </p>
+                            <a href="https://www.youtube.com/watch?v=4sosXZsdy-s&t=1173s" class="btn btn-outline-light"
+                                style="color:#6244bb; border-color: #6244bb; font-weight: bold; border:2px solid;">Go!</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md mb-3">
+                    <div class="card">
+                        <img src="./diagram.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-weight: bolder;">ER Diagram</h5>
+                            <p class="card-text">Some quick example text and make up the bulk
+                                of the card's content.</p>
+                            <form action="/er" method="get">
+                                <button type="submit" class="btn btn-outline-light"
+                                    style="color:#6244bb; border-color: #6244bb; font-weight: bold; border:2px solid;">Check
+                                    It Out!
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md mb-3">
+                    <div class="card">
+                        <img src="./database.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-weight: bolder;">Sign In</h5>
+                            <p class="card-text">To modify the database, you need to sign in first. Check the link
+                                below!</p>
+                            <form action="/signin" method="get">
+                                <button type="submit" class="btn btn-outline-light"
+                                    style="color:#6244bb; border-color: #6244bb; font-weight: bold; border:2px solid;">Sign
+                                    In</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+
+    <script>
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    </script>
+
+</body>
+
+</html>

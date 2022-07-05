@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+</head>
+
+<style>
+    .main-body {
+        margin-top: 150px;
+    }
+</style>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-1 fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="row">
+                    <img src="./phoenix_nav.png" style="width: 200px;" alt="">
+                    <!-- <h1>The Demo Page</h1> -->
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/signin" class="nav-link fw-bolder">SIGN IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/er" class="nav-link">ER Diagram</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.youtube.com/watch?v=4sosXZsdy-s&t=2642s" class="nav-link">Video Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <% if(table_name=="Flights" ){ %>
+        <div class="container main-body bg-light border" style="max-width: 900px;">
+            <h1 class="p-3">ADDING NEW FLIGHT</h1>
+
+
+            <form action="/insert_flight" method="post" class="needs-validation" novalidate name="myForm"
+                onsubmit="return(Validate());">
+                <div class="d-flex flex-column justify-content-center mt-3">
+
+                    <div class="row">
+                        <div class="col-md-7 ">
+                            <div class="form-floating mb-4" style="margin:auto">
+                                <input type="text" class="form-control" id="flight_id" name="flight_id"
+                                    placeholder="Ex: AA1137" required>
+                                <label class="text-muted" for="flight_id">Flight ID</label>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please enter Flight ID!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div>
+                                <select class="form-select form-select-lg   " name="aircraft_code" id="aircraft_code"
+                                    aria-label="Default select example" required>
+                                    <option selected value="">Aircraft Code</option>
+                                    <% for(let code of aircraft_code_list){ %>
+                                        <option value="<%=code%>">
+                                            <%=code%>
+                                        </option>
+                                        <% } %>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose an aircraft code!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 ">
+                            <div>
+                                <%const airports=Object.keys(airport_gates)%>
+                                    <select class="form-select form-select-lg  " name="departure_airport"
+                                        id="departure_airport" aria-label="Default select example" data-airport=<%
+                                        airports%>
+                                        onchange="populate(this.id,'departure_gate')" required>
+                                        <option selected value="">Departure Airport</option>
+                                        <% for(let airport of airports){ %>
+                                            <option value="<%=airport%>">
+                                                <%=airport%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                    <div class="invalid-feedback" style="font-weight: bolder;">
+                                        Please choose a departure airport code!
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <input class="form-control-lg form-control mb-4"
+                                    style="margin: auto; background-color: white;" name="departure_time"
+                                    type="datetime-local" placeholder="Select Departure Time" required>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please enter departure airport code!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <select class="form-select form-select-lg " name="departure_gate" id="departure_gate"
+                                    aria-label="Default select example" required>
+                                    <option selected value="">Departure Gate</option>
+                                    <% for(let gate of gates){ %>
+                                        <option value="<%=gate%>">
+                                            <%=gate%>
+                                        </option>
+                                        <% } %>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose a departure airport gate!
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div>
+                                <select class="form-select form-select-lg  " name="arrival_airport"
+                                    aria-label="Default select example" required>
+                                    <option selected value="">Arrival Airport</option>
+                                    <% for(let airport of airports){ %>
+                                        <option value="<%=airport%>">
+                                            <%=airport%>
+                                        </option>
+                                        <% } %>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose an arrival airport code!
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 ">
+                            <div>
+                                <input class="form-control-lg form-control mb-3 "
+                                    style="margin: auto; background-color: white;" name="arrival_time"
+                                    type="datetime-local" placeholder="Select Arrival Time" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <select class="form-select form-select-lg  " name="arrival_gate"
+                                    aria-label="Default select example" required>
+                                    <option selected value="">Arrival Gate</option>
+                                    <% for(let gate of gates){ %>
+                                        <option value="<%=gate%>">
+                                            <%=gate%>
+                                        </option>
+                                        <% } %>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose an arrival airport gate!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div>
+                                <label for="refuel"> Refueling</label>
+                                <select class="form-select form-select-lg" name="refuel" id="refuel"
+                                    aria-label="Default select example" required>
+                                    <option selected></option>
+                                    <option value="true">Ready</option>
+                                    <option value="false">Not Ready</option>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose an option!
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div>
+                                <label for="cleaning"> Cleaning</label>
+                                <select class="form-select form-select-lg" name="cleaning" id="cleaning"
+                                    aria-label="Default select example" required>
+                                    <option selected></option>
+                                    <option value="true">Ready</option>
+                                    <option value="false">Not Ready</option>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose an option!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div>
+                                <label for="maintainance"> Maintainance</label>
+                                <select class="form-select form-select-lg" name="maintainance" id="maintainance"
+                                    aria-label="Default select example" required>
+                                    <option selected></option>
+                                    <option value="true">Ready</option>
+                                    <option value="false">Not Ready</option>
+                                </select>
+                                <div class="invalid-feedback" style="font-weight: bolder;">
+                                    Please choose an option!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="text-center mb-3 mt-3">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bolder ">INSERT</button>
+                    <button type="reset" class="btn btn-warning btn-lg fw-bolder">RESET</button>
+                </div>
+
+
+            </form>
+        </div>
+
+        <div class="container mt-3 pb-4" style="max-width: 900px;">
+            <p>
+                <button class="btn btn-secondary mt-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Gates for each airport
+                </button>
+            </p>
+
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Airport</th>
+                                <th scope="col">Gates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (let airport of airports){ %>
+                                <tr>
+                                    <th scope="row">
+                                        <%=airport %>
+                                    </th>
+                                    <%let string="" %>
+                                        <% for (let gate of airport_gates[airport]){ %>
+                                            <% string=string+gate+" " %>
+                                                        <% } %>
+                                                            <td>
+                                                                <%=string %>
+                                                            </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+
+            <%}else {if(table_name==" Aircrafts"){%>
+                                                <div class="container main-body bg-light border p-3"
+                                                    style="max-width: 900px;">
+                                                    <h1 class=p-3>ADD NEW AIRCRAFT</h1>
+                                                    <form action="/insert_aircraft" method="post" name="myForm"
+                                                        onsubmit="return(Validate_aircraft());" class="needs-validation"
+                                                        novalidate>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <div class="form-floating mb-4" style="margin:auto">
+                                                                        <input type="text" class="form-control"
+                                                                            id="aircraft_code" name="aircraft_code"
+                                                                            placeholder="Ex: AA1137" required>
+                                                                        <label class="text-muted"
+                                                                            for="aircraft_code">Aircraft Code</label>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please enter aircraft code!
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    <div class="form-floating mb-4" style="margin:auto">
+                                                                        <input type="text" class="form-control"
+                                                                            id="model" name="model"
+                                                                            placeholder="Ex: AA1137" required>
+                                                                        <label class="text-muted"
+                                                                            for="model">Model</label>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please enter model!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-floating mb-4" style="margin:auto">
+                                                                        <input type="number" class="form-control"
+                                                                            id="no_economy_seats"
+                                                                            name="no_economy_seats"
+                                                                            placeholder="Ex: AA1137" required>
+                                                                        <label class="text-muted"
+                                                                            for="no_economy_seats">No
+                                                                            economy seats</label>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please enter number of economy seats!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-floating mb-4" style="margin:auto">
+                                                                        <input type="number" class="form-control"
+                                                                            id="no_business_seats"
+                                                                            name="no_business_seats"
+                                                                            placeholder="Ex: AA1137" required>
+                                                                        <label class="text-muted"
+                                                                            for="no_business_seats">No
+                                                                            business seats</label>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please enter number of business seats!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-floating mb-4" style="margin:auto">
+                                                                        <input type="number" class="form-control"
+                                                                            id="no_first_class_seats"
+                                                                            name="no_first_class_seats"
+                                                                            placeholder="Ex: AA1137" required>
+                                                                        <label class="text-muted"
+                                                                            for="no_first_class_seats">No
+                                                                            first class seats</label>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please enter number of first class seats!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div>
+                                                                        <label for="movie"> Movie</label>
+                                                                        <select class="form-select form-select-lg mb-2"
+                                                                            name="movie" id="movie"
+                                                                            aria-label="Default select example"
+                                                                            required>
+                                                                            <option selected></option>
+                                                                            <option value="true">Yes</option>
+                                                                            <option value="false">No</option>
+                                                                        </select>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please choose an option!
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div>
+                                                                        <label for="wifi"> Wifi</label>
+                                                                        <select class="form-select form-select-lg mb-2"
+                                                                            name="wifi" id="wifi"
+                                                                            aria-label="Default select example"
+                                                                            required>
+                                                                            <option selected></option>
+                                                                            <option value="true">Yes</option>
+                                                                            <option value="false">No</option>
+                                                                        </select>
+                                                                        <div class="invalid-feedback"
+                                                                            style="font-weight: bolder;">
+                                                                            Please choose an option!
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div
+                                                                        class="d-flex justify-content-around pt-3 button-flex">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary btn-lg fw-bolder ">INSERT</button>
+                                                                        <button type="reset"
+                                                                            class="btn btn-warning btn-lg fw-bolder">RESET</button>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                                <% }else{ %>
+                                                    <div class="container main-body bg-light border p-3"
+                                                        style="max-width: 900px;">
+                                                        <h1 class=p-3>ADD NEW AIRPORT</h1>
+                                                        <form action="/insert_airport" method="post" name="myForm"
+                                                            onsubmit="return(Validate_airport());"
+                                                            class="needs-validation" novalidate>
+                                                            <div class="d-flex flex-column justify-content-center">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-floating mb-4"
+                                                                            style="margin:auto">
+                                                                            <input type="text" class="form-control"
+                                                                                id="airport_code" name="airport_code"
+                                                                                placeholder="Ex: AA1137" required>
+                                                                            <label class="text-muted"
+                                                                                for="airport_code">Airport
+                                                                                Code</label>
+                                                                            <div class="invalid-feedback"
+                                                                                style="font-weight: bolder;">
+                                                                                Please enter airport code!
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="form-floating mb-4"
+                                                                            style="margin:auto">
+                                                                            <input type="text" class="form-control"
+                                                                                id="airport_name" name="airport_name"
+                                                                                placeholder="Ex: AA1137" required>
+                                                                            <label class="text-muted"
+                                                                                for="airport_name">Airport
+                                                                                Name</label>
+                                                                            <div class="invalid-feedback"
+                                                                                style="font-weight: bolder;">
+                                                                                Please enter airport name!
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="form-floating mb-4"
+                                                                            style="margin:auto">
+                                                                            <input type="text" class="form-control"
+                                                                                id="city" name="city"
+                                                                                placeholder="Ex: AA1137" required>
+                                                                            <label class="text-muted"
+                                                                                for="city">City</label>
+                                                                            <div class="invalid-feedback"
+                                                                                style="font-weight: bolder;">
+                                                                                Please enter city name!
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div
+                                                                            class="d-flex justify-content-around pt-1 button-flex">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary btn-lg fw-bolder ">INSERT</button>
+                                                                            <button type="reset"
+                                                                                class="btn btn-warning btn-lg fw-bolder">RESET</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                        </form>
+                                                    </div>
+
+
+                                                    <% }} %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        <script src=" https://cdn.jsdelivr.net/npm/flatpickr">
+                                                        </script>
+                                                        <script>
+                                                            const fp = flatpickr("input[type=datetime-local", {
+                                                                enableTime: true,
+                                                                dateFormat: "Y-m-d H:i",
+                                                            }); // flatpickr
+                                                        </script>
+                                                        <script>
+                                                            var forms = document.querySelectorAll('.needs-validation')
+
+                                                            // Loop over them and prevent submission
+                                                            Array.prototype.slice.call(forms)
+                                                                .forEach(function (form) {
+                                                                    form.addEventListener('submit', function (event) {
+                                                                        if (!form.checkValidity()) {
+                                                                            event.preventDefault()
+                                                                            event.stopPropagation()
+                                                                        }
+
+                                                                        form.classList.add('was-validated')
+                                                                    }, false)
+                                                                })
+                                                        </script>
+
+                                                        <script type="text/javascript">
+                                                            function Validate() {
+
+                                                                const flight_id = document.myForm.flight_id.value
+                                                                const departure_airport = document.myForm.departure_airport.value
+                                                                const arrival_airport = document.myForm.arrival_airport.value
+                                                                const departure_gate = document.myForm.departure_gate.value
+                                                                const arrival_gate = document.myForm.arrival_gate.value
+
+                                                                if (isNaN(flight_id[0, 1]) && !isNaN(flight_id[2, 3, 4, 5]) && flight_id.length == 6) {
+                                                                    if (departure_airport != arrival_airport) {
+                                                                        return true
+                                                                    }
+                                                                    else {
+                                                                        alert("The departure airport can't be the same as the arrival airport")
+                                                                        return false
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    alert("Please enter a valid flight ID. Ex: AA1137")
+                                                                    return false
+                                                                }
+                                                            }
+                                                        </script>
+                                                        <script type="text/javascript">
+                                                            function Validate_aircraft() {
+                                                                const aircraft_code = document.myForm.aircraft_code.value
+                                                                const economy = document.myForm.no_economy_seats.value
+                                                                const business = document.myForm.no_business_seats.value
+                                                                const first_class = document.myForm.no_first_class_seats.value
+
+                                                                if (aircraft_code.length == 3) {
+                                                                    return true
+                                                                }
+                                                                else {
+                                                                    alert("Please enter a valid aircraft code. Ex: 338")
+                                                                    return false
+                                                                }
+                                                            }
+                                                        </script>
+
+                                                        <script type="text/javascript">
+                                                            function Validate_airport() {
+                                                                const airport_code = document.myForm.airport_code.value
+                                                                if (airport_code.length == 3 && isNaN(airport_code[0]) && isNaN(airport_code[1]) && isNaN(airport_code[2])) {
+                                                                    return true
+                                                                }
+                                                                else {
+                                                                    alert("Please enter a valid airport code. Ex: HOU")
+                                                                    return false
+                                                                }
+                                                            }
+                                                        </script>
+
+
+
+
+</body>
+
+</html>

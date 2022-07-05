@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<style>
+    .main-body {
+        margin-top: 150px
+    }
+
+    .btn {
+        font-weight: bolder;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-1 fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="row">
+                    <img src="./phoenix_nav.png" style="width: 200px;" alt="">
+                    <!-- <h1>The Demo Page</h1> -->
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/signin" class="nav-link fw-bolder">SIGN IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/er" class="nav-link">ER Diagram</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.youtube.com/watch?v=4sosXZsdy-s&t=2642s" class="nav-link">Video Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-sm main-body" style="max-width: 600px;">
+        <div class="p-2 bg-light border">
+            <h3>Please choose a table to interact</h3>
+            <form class='container-sm text-center' action='/select-table' method="get">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                        name="table_select" required>
+                        <option value=""></option>
+                        <option value="Flights">Flights</option>
+                        <option value=" Aircrafts">Aircrafts</option>
+                        <option value="Airports">Airports</option>
+                    </select>
+                    <label for="floatingSelect">Please choose a table</label>
+                </div>
+                <div class="row">
+                    <div class="col text-start">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="insert"
+                                value="insert" checked>
+                            <label class="form-check-label text-start" for="insert">
+                                INSERT
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col text-start">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="update"
+                                value="update">
+                            <label class="form-check-label" for="update">
+                                UPDATE
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg my-2">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="container-sm main-body" style="max-width: 600px;">
+        <div class="p-2 bg-light border">
+            <h3>Please choose a table to interact</h3>
+            <form class='container-sm text-center' action='/select-table' method="get">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                        name="table_select" required>
+                        <option value=""></option>
+                        <option value="Flights">Flights</option>
+                        <option value=" Aircrafts">Aircrafts</option>
+                        <option value="Airports">Airports</option>
+                        <option value="Crew">Crew</option>
+                        <option value="Gates">Gates</option>
+                        <option value="Seats">Seats</option>
+                        <option value="Boarding_passes">Boarding_passes</option>
+                        <option value="Tickets">Tickets</option>
+                        <option value="Baggage">Baggage</option>
+                    </select>
+                    <label for="floatingSelect">Please choose a table</label>
+
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg my-2">SHOW TABLE</button>
+            </form>
+        </div>
+
+
+
+
+
+</body>
+
+</html>
